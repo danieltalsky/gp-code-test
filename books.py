@@ -37,14 +37,14 @@ for parse_type, file_path in file_import_list.iteritems():
         if row == None:
             break
         pprint(row)
-        book_list.insert_record(row)
+        #book_list.insert_record(row)
 
 # Make query based on command line arguments
 # args == Namespace(filter=None, reverse=False, year=False)
-book_list.query_book_list(ARGS GO HERE)
+#book_list.query_book_list(ARGS GO HERE)
 
 # Pretty output
-while True:
-    row = reader.get_result()
-    if row == None:
-        break
+#while True:
+#    row = reader.get_result()
+#    if row == None:
+#        break
