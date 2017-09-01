@@ -2,8 +2,6 @@
 
 import argparse
 import sqlite3
-from pprint import pprint
-
 from book_list.book_list_file_reader import BookListFileReader
 from book_list.book_list import BookList
 
@@ -26,6 +24,7 @@ parser.add_argument('--year', action='store_true', default=False,
 parser.add_argument('--reverse', action='store_true', default=False,
                     help='reverse sort')
 args = parser.parse_args()
+
 
 # Read files and populate book list
 sqlite3_connection = sqlite3.Connection(SQLITE3_DB_FILE);

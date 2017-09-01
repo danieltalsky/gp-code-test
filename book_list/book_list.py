@@ -3,6 +3,10 @@ from pprint import pprint
 
 
 class BookList:
+    """
+    Maintains a book list in sqlite 3
+    """
+
     DELETE_TABLE_SQL = """DROP TABLE IF EXISTS book_list"""
 
     TABLE_CREATION_SQL = """
@@ -37,9 +41,18 @@ class BookList:
     __init__.__annotations__ = {'dbHandle': Connection}
 
     def create_book_list_table(self):
+        """
+        Creates a single table for book list
+        :return:
+        """
         self.cursor.execute(self.TABLE_CREATION_SQL)
 
     def insert_record(self, record):
+        """
+        Inserts a single book record from dictionary input format
+        :param record:
+        :return:
+        """
         positional_record = (
             record['Book Title'].strip(),
             record['First Name'].strip(),
@@ -49,19 +62,26 @@ class BookList:
         self.cursor.execute(self.INSERT_BOOK_SQL, positional_record)
 
     def query_book_list(self, filter=None, reverse=False, year=False):
+        """
+        Populate record set with test challenge filters
+        :param filter:
+        :param reverse:
+        :param year:
+        :return:
+        """
         sort_field = self.PUBLICATION_YEAR_FIELDNAME if year else self.AUTHOR_LAST_FIELDNAME
         sort_direction = 'desc' if reverse else 'asc'
         if (filter != None):
             like = '%' + filter + '%'
-
-            pprint(filter)
-
             self.cursor.execute(
                 self.SELECT_BOOK_LIST_SQL.format(self.SELECT_BOOK_WHERE_CLAUSE, sort_field, sort_direction),
                 (like, like, like, like))
         else:
             self.cursor.execute(self.SELECT_BOOK_LIST_SQL.format('', sort_field, sort_direction))
 
-
     def get_record(self):
+        """
+        Return single record for iteration through resultset, or none for end of record
+        :return:
+        """
         return self.cursor.fetchone()
