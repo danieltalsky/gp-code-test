@@ -10,9 +10,9 @@ from book_list.book_list import BookList
 # Config
 SQLITE3_DB_FILE = './db/booklist.sqlite3'
 file_import_list = {
-    'csv' : './code-test-source-files/csv',
-    'pipe' : './code-test-source-files/pipe',
-    'slash' : './code-test-source-files/slash',
+    'csv': './code-test-source-files/csv',
+    'pipe': './code-test-source-files/pipe',
+    'slash': './code-test-source-files/slash',
 }
 
 # Command line parsing
@@ -41,9 +41,13 @@ for parse_type, file_path in file_import_list.iteritems():
 # Make query based on command line arguments
 book_list.query_book_list(filter=args.filter, year=args.year, reverse=args.reverse)
 
+# @todo: One line docs of all funcs
+# @todo: Unit tests of the two classes
+# @todo: Functional test of the whole script
+
 # Output
 while True:
     row = book_list.get_record()
     if row == None:
         break
-    pprint(row)
+    print("{}, {}, {}, {}".format(*row))

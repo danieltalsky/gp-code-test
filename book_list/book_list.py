@@ -1,8 +1,8 @@
 from sqlite3 import Connection, Cursor
 from pprint import pprint
 
-class BookList:
 
+class BookList:
     DELETE_TABLE_SQL = """DROP TABLE IF EXISTS book_list"""
 
     TABLE_CREATION_SQL = """
@@ -33,12 +33,11 @@ class BookList:
         self.cursor = db_handle.cursor()
         self.create_book_list_table()
         pass
-    __init__.__annotations__ = {'dbHandle': Connection}
 
+    __init__.__annotations__ = {'dbHandle': Connection}
 
     def create_book_list_table(self):
         self.cursor.execute(self.TABLE_CREATION_SQL)
-
 
     def insert_record(self, record):
         positional_record = (
@@ -49,25 +48,20 @@ class BookList:
         )
         self.cursor.execute(self.INSERT_BOOK_SQL, positional_record)
 
-
     def query_book_list(self, filter=None, reverse=False, year=False):
         sort_field = self.PUBLICATION_YEAR_FIELDNAME if year else self.AUTHOR_LAST_FIELDNAME
         sort_direction = 'desc' if reverse else 'asc'
-        filter = None
         if (filter != None):
-            like = '%'+filter+'%'
-            self.cursor.execute(self.SELECT_BOOK_LIST_SQL.format(self.SELECT_BOOK_WHERE_CLAUSE, sort_field, sort_direction),
-                                (like, like, like, like))
+            like = '%' + filter + '%'
+
+            pprint(filter)
+
+            self.cursor.execute(
+                self.SELECT_BOOK_LIST_SQL.format(self.SELECT_BOOK_WHERE_CLAUSE, sort_field, sort_direction),
+                (like, like, like, like))
         else:
             self.cursor.execute(self.SELECT_BOOK_LIST_SQL.format('', sort_field, sort_direction))
 
-        self.cursor.execute('SELECT * FROM book_list')
-        pprint(self.cursor.rowcount)
-        #pprint(self.SELECT_BOOK_LIST_SQL.format('', sort_field, sort_direction))
 
     def get_record(self):
-        if (self.cursor.rowcount < 1):
-            record = None
-        else:
-            record = self.cursor.fetchone()
-        return record
+        return self.cursor.fetchone()
