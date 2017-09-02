@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 
+import os
 import argparse
 import sqlite3
 from book_list.book_list_file_reader import BookListFileReader
 from book_list.book_list import BookList
 
 # Config
-SQLITE3_DB_FILE = './db/booklist.sqlite3'
+curdir = dir_path = os.path.dirname(os.path.realpath(__file__))
+SQLITE3_DB_FILE = curdir + '/db/booklist.sqlite3'
 file_import_list = {
-    'csv': './code-test-source-files/csv',
-    'pipe': './code-test-source-files/pipe',
-    'slash': './code-test-source-files/slash',
+    'csv': curdir + '/code-test-source-files/csv',
+    'pipe': curdir + '/code-test-source-files/pipe',
+    'slash': curdir + '/code-test-source-files/slash',
 }
 
 # Command line parsing
@@ -39,10 +41,6 @@ for parse_type, file_path in file_import_list.iteritems():
 
 # Make query based on command line arguments
 book_list.query_book_list(filter=args.filter, year=args.year, reverse=args.reverse)
-
-# @todo: One line docs of all funcs
-# @todo: Unit tests of the two classes
-# @todo: Functional test of the whole script
 
 # Output
 while True:

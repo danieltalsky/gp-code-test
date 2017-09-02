@@ -36,7 +36,6 @@ class BookList:
     def __init__(self, db_handle):
         self.cursor = db_handle.cursor()
         self.create_book_list_table()
-        pass
 
     __init__.__annotations__ = {'dbHandle': Connection}
 

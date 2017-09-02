@@ -30,12 +30,15 @@ class BookListFileReader:
         Get the next CSV result and normalize as a dict with the correct headers
         :return:
         """
+
+        # Connect if no connection
         if (self.reader == None):
             csvfile = open(self.file_path)
             self.reader = csv.reader(csvfile, delimiter=self.DELIMITERS[self.input_file_type])
         try:
             row = dict(zip(
                 self.FIELD_ORDER[self.input_file_type],
+                # Next
                 self.reader.next())
             )
             return row
