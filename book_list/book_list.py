@@ -22,7 +22,9 @@ class BookList:
         INSERT INTO book_list (book_title, author_first, author_last, publication_year) VALUES (?, ? ,?, ?)
     """
 
-    SELECT_BOOK_LIST_SQL = """SELECT book_title, author_first, author_last, publication_year FROM book_list {} ORDER BY {} {} """
+    SELECT_BOOK_LIST_SQL = """
+        SELECT author_last, author_first, book_title, publication_year FROM book_list {} ORDER BY {} {} 
+    """
 
     SELECT_BOOK_WHERE_CLAUSE = """
         WHERE book_title LIKE ? OR author_first LIKE ? OR author_last LIKE ? OR publication_year LIKE ?

@@ -5,40 +5,56 @@ import os
 
 
 class FunctionTestsCommandLine(TestCase):
+    RESULTS_EXAMPLE_1 ="""McConnell, Steve, Code Complete, 1993
+Fowler, Martin, Refactoring, 1999"""
 
-    RESULTS_NO_ARGS = """Test-Driven Development, Kent, Beck, 2002
-Implementation Patterns, Kent, Beck, 2007
-The Mythical Man-Month, Fred, Brooks, 1975
-Javascript: The Good Parts, Douglas, Crockford, 2008
-Refactoring, Martin, Fowler, 1999
-Patterns of Enterprise Application Architecture, Martin, Fowler, 2002
-Clean Code, Robert, Martin, 2008
-Code Complete, Steve, McConnell, 1993
-The Art of Agile Development, James, Shore, 2008"""
+    RESULTS_EXAMPLE_2 = """Fowler, Martin, Refactoring, 1999
+Fowler, Martin, Patterns of Enterprise Application Architecture, 2002
+Beck, Kent, Implementation Patterns, 2007
+Martin, Robert, Clean Code, 2008"""
 
-    RESULTS_WITH_FILTER ="""Test-Driven Development, Kent, Beck, 2002
-Implementation Patterns, Kent, Beck, 2007
-Javascript: The Good Parts, Douglas, Crockford, 2008
-Patterns of Enterprise Application Architecture, Martin, Fowler, 2002
-Clean Code, Robert, Martin, 2008
-The Art of Agile Development, James, Shore, 2008"""
+    RESULTS_EXAMPLE_3 = """Beck, Kent, Test-Driven Development, 2002
+Beck, Kent, Implementation Patterns, 2007
+Brooks, Fred, The Mythical Man-Month, 1975
+Crockford, Douglas, Javascript: The Good Parts, 2008
+Fowler, Martin, Refactoring, 1999
+Fowler, Martin, Patterns of Enterprise Application Architecture, 2002
+Martin, Robert, Clean Code, 2008
+McConnell, Steve, Code Complete, 1993
+Shore, James, The Art of Agile Development, 2008"""
+
+    RESULTS_WITH_FILTER = """Beck, Kent, Test-Driven Development, 2002
+Beck, Kent, Implementation Patterns, 2007
+Crockford, Douglas, Javascript: The Good Parts, 2008
+Fowler, Martin, Patterns of Enterprise Application Architecture, 2002
+Martin, Robert, Clean Code, 2008
+Shore, James, The Art of Agile Development, 2008"""
 
     def setUp(self):
         self.working_dir = os.path.dirname(os.path.realpath(__file__))
         self.script = self.working_dir + "/../../books.py"
 
-    def test_results_no_args(self):
+    def test_sample_output_in_readme_txt(self):
+        # example 1
+        stdout = check_output(["python", self.script, "--filter", "199", "--reverse"])
+        self.assertEqual(stdout.strip(), self.RESULTS_EXAMPLE_1.strip())
+
+        # example 2
+        stdout = check_output(["python", self.script, "--filter", "er", "--year"])
+        # print(stdout.strip())
+        self.assertEqual(stdout.strip(), self.RESULTS_EXAMPLE_2.strip())
+
+        # example 3
         stdout = check_output(["python", self.script])
-        # self.assertEqual(stdout.strip(), self.RESULTS_NO_ARGS.strip())
-        # @todo: make pass!
+        self.assertEqual(stdout.strip(), self.RESULTS_EXAMPLE_3.strip())
 
     def test_results_filter(self):
         stdout = check_output(["python", self.script, "--filter", "00"])
-        # self.assertEqual(stdout.strip(), self.RESULTS_WITH_FILTER.strip())
-        # @todo make pass!
+        self.assertEqual(stdout.strip(), self.RESULTS_WITH_FILTER.strip())
 
     def tests___there_would_be_more_of_them(self):
         self.assertTrue(True)
+
 
 if __name__ == '__main__':
     unittest.main()

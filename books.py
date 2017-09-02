@@ -27,7 +27,6 @@ parser.add_argument('--reverse', action='store_true', default=False,
                     help='reverse sort')
 args = parser.parse_args()
 
-
 # Read files and populate book list
 sqlite3_connection = sqlite3.Connection(SQLITE3_DB_FILE);
 book_list = BookList(sqlite3_connection)
@@ -35,7 +34,7 @@ for parse_type, file_path in file_import_list.iteritems():
     reader = BookListFileReader(file_path, parse_type)
     while True:
         row = reader.get_result()
-        if row == None:
+        if row is None:
             break
         book_list.insert_record(row)
 
