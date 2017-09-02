@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+"""
+books.py
+
+reads a list of books from an input file and returns them filtered and sorted
+
+features
+    - iterates through records without holding the entire dataset in memory, allowing for large datasets
+    - uses SQLite for storage and retrieval
+"""
 
 import os
 import argparse
